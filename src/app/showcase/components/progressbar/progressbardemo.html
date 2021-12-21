@@ -16,6 +16,9 @@
         <h5>Static</h5>
         <p-progressBar></p-progressBar>
 
+        <h5>Static with custom range and unit</h5>
+        <p-progressBar value="50" min="-10" max="130" unit="&deg;F"></p-progressBar>
+
         <h5>Indeterminate</h5>
         <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
     </div>
@@ -41,6 +44,12 @@ export class ModelComponent &#123;
     value: number = 0;
 
 &#125;
+</app-code>
+
+            <p>A custom progress bar range and unit can be defined using the <i>min</i>, <i>max</i> and <i>unit</i> properties.</p>
+
+<app-code lang="markup" ngNonBindable ngPreserveWhitespaces>
+&lt;p-progressBar [value]="value" min="-10" max="130" unit="&amp;deg;F" &gt;&lt;/p-progressBar&gt;
 </app-code>
 
             <p>Indeterminate has no such a requirement and is simple enabled using <i>mode</i> property.</p>
@@ -72,6 +81,18 @@ export class ModelComponent &#123;
                             <td>boolean</td>
                             <td>true</td>
                             <td>Show or hide progress bar value.</td>
+                        </tr>
+                        <tr>
+                            <td>min</td>
+                            <td>number</td>
+                            <td>0</td>
+                            <td>The minimum value of the progress bar's range. Should be less than the <i>max</i> value.</td>
+                        </tr>
+                        <tr>
+                            <td>max</td>
+                            <td>number</td>
+                            <td>100</td>
+                            <td>The maximum value of the progress bar's range. Should be more than the <i>min</i> value.</td>
                         </tr>
                         <tr>
                             <td>unit</td>
@@ -145,6 +166,9 @@ export class ModelComponent &#123;
 
     &lt;h5&gt;Static&lt;/h5&gt;
     &lt;p-progressBar&gt;&lt;/p-progressBar&gt;
+
+    &lt;h5&gt;Static with custom range and unit&lt;/h5&gt;
+    &lt;p-progressBar value="50" min="-10" max="130" unit="&amp;deg;F"&gt;&lt;/p-progressBar&gt;
 
     &lt;h5&gt;Indeterminate&lt;/h5&gt;
     &lt;p-progressBar mode="indeterminate" [style]="&#123;'height': '6px'&#125;"&gt;&lt;/p-progressBar&gt;

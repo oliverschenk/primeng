@@ -1,13 +1,13 @@
-import {NgModule,Component,Input,ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import {NgModule,Component,Input,ChangeDetectionStrategy, ViewEncapsulation, OnChanges, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'p-progressBar',
     template: `
-        <div [class]="styleClass" [ngStyle]="style" role="progressbar" aria-valuemin="0" [attr.aria-valuenow]="value" aria-valuemax="100"
+        <div [class]="styleClass" [ngStyle]="style" role="progressbar" [attr.aria-valuemin]="min" [attr.aria-valuenow]="value" [attr.aria-valuemax]="max"
             [ngClass]="{'p-progressbar p-component': true, 'p-progressbar-determinate': (mode === 'determinate'), 'p-progressbar-indeterminate': (mode === 'indeterminate')}">
-            <div *ngIf="mode === 'determinate'" class="p-progressbar-value p-progressbar-value-animate" [style.width]="value + '%'" style="display:flex">
-                <div *ngIf="showValue" class="p-progressbar-label" [style.display]="value != null && value !== 0 ? 'flex' : 'none'">{{value}}{{unit}}</div>
+            <div *ngIf="mode === 'determinate'" class="p-progressbar-value p-progressbar-value-animate" [style.width]="progressPercentage + '%'" style="display:flex">
+                <div *ngIf="showValue" class="p-progressbar-label" [style.display]="value != null && _progressPercentage !== 0 ? 'flex' : 'none'">{{value}}{{unit}}</div>
             </div>
             <div *ngIf="mode === 'indeterminate'" class="p-progressbar-indeterminate-container">
                 <div class="p-progressbar-value p-progressbar-value-animate"></div>
@@ -21,9 +21,13 @@ import {CommonModule} from '@angular/common';
         'class': 'p-element'
     }
 })
-export class ProgressBar {
+export class ProgressBar implements OnChanges {
 
-    @Input() value: any;
+    @Input() value: number;
+
+    @Input() min: number = 0;
+
+    @Input() max: number = 100;
 
     @Input() showValue: boolean = true;
 
@@ -35,6 +39,13 @@ export class ProgressBar {
 
     @Input() mode: string = 'determinate';
 
+    private progressPercentage: number;
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.hasOwnProperty('value') || changes.hasOwnProperty('min') || changes.hasOwnProperty('max')) {
+            this.progressPercentage = ((this.value - this.min) * 100) / (this.max - this.min);
+        }
+    }
 }
 
 @NgModule({
